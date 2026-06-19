@@ -151,3 +151,62 @@ O perfil de execução de ambos os modelos é **memory-bound**: a CPU passa a ma
 | Tokens | 1000 (geração) |
 | Threads llama.cpp | 4 |
 | Temperatura | 0 (determinístico) |
+
+---
+
+## 8. Qwen 2.5 1.5B — Adição à Comparação
+
+### Dados coletados
+
+| Métrica | Valor |
+|---|---|
+| RAM pico | 2.755 MB (~2,7 GB) |
+| RAM média | 2.663 MB |
+| Amostras RAM | 228 |
+| Duração monitorada | 22,8 s |
+| Prompt processing | 162,8 t/s |
+| Geração de tokens | 31,1 t/s |
+| CPI médio (STAT) | 15,21 |
+| CPI thread principal | 0,70 |
+| DP MFLOP/s total | 26,02 |
+| AVX/AVX512 MFLOP/s | 0 |
+| Vectorization ratio | 0% |
+| Clock thread principal | 3.888 MHz |
+| Runtime LIKWID | 0,0219 s |
+
+---
+
+## 9. Comparativo Final — Três Modelos
+
+| Métrica | Llama 3.2 1B | Qwen 2.5 1.5B | Llama 3.2 3B |
+|---|---|---|---|
+| RAM pico | 5,6 GB | **2,7 GB** ✅ | 11,9 GB ❌ OOM |
+| RAM média | 5,3 GB | 2,6 GB | — |
+| Tokens/s (geração) | **38,3** | 31,1 | N/A |
+| Prompt processing | **236,6 t/s** | 162,8 t/s | N/A |
+| CPI médio (STAT) | 13,52 | 15,21 | **12,77** |
+| CPI thread principal | 0,68 | 0,70 | 0,67 |
+| DP MFLOP/s | 31,46 | 26,02 | **33,13** |
+| AVX/AVX512 | 0% | 0% | 0% |
+| Clock principal | 3.779 MHz | **3.888 MHz** | 3.791 MHz |
+| Vectorization ratio | 0% | 0% | 0% |
+| Viabilidade (16 GB) | ✅ | ✅ | ❌ OOM |
+| Licença | Meta Llama 3 | **Apache 2.0** | Meta Llama 3 |
+
+---
+
+## 10. Conclusões Finais (Três Modelos)
+
+**Qwen 2.5 1.5B é o modelo mais eficiente em RAM** — usa apenas 2,7 GB de pico, quase metade do Llama 1B e um quarto do 3B. Para cenários com memória limitada ou múltiplos processos rodando em paralelo, é a melhor escolha.
+
+**Llama 3.2 1B lidera em velocidade de geração** — 38,3 t/s contra 31,1 do Qwen 1.5B, apesar de ser um modelo maior. Isso sugere que a arquitetura Llama é mais otimizada para throughput em CPU com essa quantização.
+
+**O Qwen atingiu o maior clock de turbo** (3.888 MHz vs ~3.780 MHz dos Llamas), indicando que o padrão de execução do Qwen pressiona mais o turbo do i5-1135G7.
+
+**Todos os modelos têm vectorization ratio = 0%** — nenhum aproveita AVX2 ou AVX512, confirmando que o gargalo é largura de banda de memória em todos os casos.
+
+**Ranking geral para o hardware disponível:**
+
+1. **Qwen 2.5 1.5B** — melhor equilíbrio RAM/desempenho, open source puro (Apache 2.0)
+2. **Llama 3.2 1B** — maior velocidade de geração, boa eficiência
+3. **Llama 3.2 3B** — inviável com 16 GB de RAM para inferência completa
