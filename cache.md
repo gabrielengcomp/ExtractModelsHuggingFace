@@ -69,6 +69,44 @@ Foram coletados os seguintes contadores:
 - mem_load_retired.l3_miss
 
 ---
+# Contadores coletados
+
+## Llama 3.2 1B
+
+| Evento | Valor |
+|---------|-------------:|
+| Instructions | 244.593.491.771 |
+| Cycles | 143.739.307.700 |
+| Cache References | 5.908.040.699 |
+| Cache Misses | 3.916.439.528 |
+| L1 Hits | 36.628.994.590 |
+| L1 Misses | 549.406.337 |
+| L2 Hits | 442.083.134 |
+| L2 Misses | 108.318.962 |
+| L3 Hits | 32.405.116 |
+| L3 Misses | 68.319.386 |
+| IPC | 1,70 |
+
+---
+
+## Qwen2.5 1.5B
+
+| Evento | Valor |
+|---------|-------------:|
+| Instructions | 241.550.851.617 |
+| Cycles | 136.685.496.248 |
+| Cache References | 5.665.592.259 |
+| Cache Misses | 3.559.238.797 |
+| L1 Hits | 33.827.782.109 |
+| L1 Misses | 663.742.912 |
+| L2 Hits | 551.713.865 |
+| L2 Misses | 111.029.495 |
+| L3 Hits | 32.736.935 |
+| L3 Misses | 69.228.668 |
+| IPC | 1,77 |
+
+---
+
 
 # Significado das métricas
 
